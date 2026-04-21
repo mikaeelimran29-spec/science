@@ -3,20 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bio-Metric Terminal | M. Mikaeel Imran</title>
+    <title>Titanium Bio-Scanner | M. Mikaeel Imran</title>
     <style>
-        /* Importing sleek, modern fonts */
-        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200;400;700&family=Space+Mono&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200;400;800&family=Space+Mono&display=swap');
 
-        * { 
-            margin: 0; 
-            padding: 0; 
-            box-sizing: border-box; 
-            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
 
         body {
-            background: #000;
+            background: #020202;
             color: #fff;
             font-family: 'Plus Jakarta Sans', sans-serif;
             height: 100vh;
@@ -24,256 +18,228 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            overflow: hidden; /* Stops any up/down scrolling */
-            perspective: 1000px;
-            position: relative;
+            overflow: hidden;
+            perspective: 1200px;
         }
 
-        /* Ambient Science-Project Background */
-        .background-effect {
+        .grid {
             position: absolute;
-            width: 100%; height: 100%;
-            background: radial-gradient(circle at 50% 50%, #0a1118 0%, #000 100%);
+            width: 200%; height: 200%;
+            background-image: linear-gradient(rgba(0, 255, 204, 0.03) 1px, transparent 1px), 
+                              linear-gradient(90deg, rgba(0, 255, 204, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            transform: rotateX(60deg) translateY(-20%);
+            animation: gridMove 20s linear infinite;
             z-index: 0;
         }
+        @keyframes gridMove { from { transform: rotateX(60deg) translateY(0); } to { transform: rotateX(60deg) translateY(50px); } }
 
-        .nebula {
-            position: absolute;
-            width: 500px; height: 500px;
-            background: radial-gradient(circle, rgba(0, 255, 204, 0.12) 0%, transparent 70%);
-            filter: blur(80px);
-            animation: drift 12s infinite alternate;
-        }
-
-        @keyframes drift { 
-            0% { transform: translate(-25%, -25%); } 
-            100% { transform: translate(25%, 25%); } 
-        }
-
-        /* Main Container with 3D Tilt */
         .container {
             position: relative;
             z-index: 10;
             width: 90%;
-            max-width: 440px;
+            max-width: 450px;
             text-align: center;
-            transform-style: preserve-3d;
         }
 
         .card {
-            background: rgba(255, 255, 255, 0.02);
-            backdrop-filter: blur(30px);
+            background: rgba(15, 15, 15, 0.7);
+            backdrop-filter: blur(40px);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 45px;
-            padding: 40px;
-            box-shadow: 0 40px 100px rgba(0, 0, 0, 0.8);
+            border-radius: 50px;
+            padding: 45px;
+            box-shadow: 0 50px 120px rgba(0, 0, 0, 0.9);
+            overflow: hidden;
             position: relative;
         }
 
+        .card::after {
+            content: "";
+            position: absolute;
+            top: -100%;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(transparent, rgba(0, 255, 204, 0.05), transparent);
+            animation: scan 4s infinite;
+        }
+        @keyframes scan { 0% { top: -100%; } 100% { top: 100%; } }
+
         .academy-logo {
-            height: 50px;
-            margin-bottom: 25px;
-            filter: drop-shadow(0 0 10px rgba(0, 255, 204, 0.5));
+            height: 45px;
+            margin-bottom: 20px;
+            filter: drop-shadow(0 0 15px rgba(0, 255, 204, 0.6));
         }
 
-        /* Technical Info Bar */
-        .formula-tag {
+        .header-tag {
             font-family: 'Space Mono', monospace;
-            font-size: 0.65rem;
-            color: #555;
-            margin-bottom: 35px;
-            padding: 12px;
-            border: 1px dashed #222;
-            border-radius: 15px;
-            letter-spacing: 1px;
-        }
-        .formula-tag b { color: #00ffcc; }
-
-        /* Sleek Inputs */
-        .input-field { margin-bottom: 25px; text-align: left; }
-        
-        label {
             font-size: 0.6rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            color: #888;
-            margin-left: 15px;
+            color: #00ffcc;
+            letter-spacing: 3px;
+            margin-bottom: 30px;
+            opacity: 0.7;
         }
+
+        .input-group { margin-bottom: 20px; text-align: left; }
+        label { font-size: 0.65rem; font-weight: 800; color: #666; text-transform: uppercase; letter-spacing: 2px; margin-left: 10px; }
 
         input {
             width: 100%;
-            background: rgba(255, 255, 255, 0.03);
+            background: rgba(255, 255, 255, 0.05);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 20px 25px;
-            border-radius: 20px;
+            padding: 22px;
+            border-radius: 25px;
             color: #fff;
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             outline: none;
             margin-top: 8px;
             text-align: center;
         }
+        input:focus { border-color: #00ffcc; background: rgba(0, 255, 204, 0.05); transform: scale(1.02); }
 
-        input:focus {
-            border-color: #00ffcc;
-            background: rgba(0, 255, 204, 0.05);
-            box-shadow: 0 0 25px rgba(0, 255, 204, 0.1);
-            transform: scale(1.03);
-        }
-
-        /* Pulsing Button */
-        .btn {
+        .scan-btn {
             width: 100%;
-            padding: 20px;
+            padding: 22px;
             background: #fff;
             color: #000;
-            border-radius: 20px;
+            border-radius: 25px;
             border: none;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            cursor: pointer;
-            box-shadow: 0 0 20px rgba(255,255,255,0.2);
-        }
-
-        .btn:hover {
-            background: #00ffcc;
-            transform: translateY(-5px);
-            box-shadow: 0 15px 35px rgba(0, 255, 204, 0.3);
-        }
-
-        /* Result Section */
-        #result-box {
-            height: 0;
-            opacity: 0;
-            overflow: hidden;
-            transition: all 0.8s cubic-bezier(0.19, 1, 0.22, 1);
-        }
-
-        #result-box.active {
-            height: auto;
-            opacity: 1;
-            margin-top: 35px;
-            padding-top: 30px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .bmi-val { font-size: 4.5rem; font-weight: 200; margin-bottom: 10px; color: #fff; }
-        
-        .status-pill {
-            display: inline-block;
-            padding: 8px 18px;
-            border-radius: 30px;
-            font-size: 0.75rem;
             font-weight: 800;
             text-transform: uppercase;
-            margin-bottom: 15px;
-        }
-
-        .explanation { font-size: 0.85rem; color: #888; line-height: 1.6; font-weight: 300; }
-
-        footer {
-            margin-top: 30px;
-            font-size: 0.6rem;
-            color: #444;
-            letter-spacing: 1px;
-        }
-
-        .mikaeel-tag {
-            color: #00ffcc;
-            font-weight: bold;
-            border: 1px solid #222;
-            padding: 6px 14px;
-            border-radius: 10px;
+            letter-spacing: 4px;
+            cursor: pointer;
             margin-top: 15px;
-            display: inline-block;
-            background: rgba(0, 255, 204, 0.05);
+        }
+        .scan-btn:hover { background: #00ffcc; box-shadow: 0 0 40px rgba(0, 255, 204, 0.4); transform: translateY(-5px); }
+
+        #result-display {
+            max-height: 0; opacity: 0; overflow: hidden;
+            transition: all 0.8s cubic-bezier(0.19, 1, 0.22, 1);
+        }
+        #result-display.active { max-height: 400px; opacity: 1; margin-top: 35px; }
+
+        .score-num { font-size: 5rem; font-weight: 200; line-height: 1; margin: 10px 0; }
+        
+        .health-bar-bg {
+            width: 100%;
+            height: 8px;
+            background: #222;
+            border-radius: 10px;
+            margin: 20px 0;
+            position: relative;
+        }
+        .health-bar-fill {
+            height: 100%;
+            width: 0%;
+            background: #00ffcc;
+            border-radius: 10px;
+            transition: width 1.5s ease-in-out, background 0.5s ease;
+        }
+
+        .status-tag { font-size: 0.8rem; font-weight: 800; text-transform: uppercase; letter-spacing: 2px; }
+        .description { font-size: 0.85rem; color: #888; margin-top: 10px; line-height: 1.5; font-weight: 400; }
+
+        footer { margin-top: 40px; font-size: 0.55rem; color: #444; letter-spacing: 2px; }
+        .mikaeel-badge { 
+            color: #00ffcc; 
+            border: 1px solid #222; 
+            padding: 8px 18px; 
+            border-radius: 15px; 
+            display: inline-block; 
+            margin-top: 15px;
+            font-weight: 800;
         }
     </style>
 </head>
 <body>
 
-<div class="background-effect"></div>
-<div class="nebula"></div>
+<div class="grid"></div>
 
-<div class="container" id="tilt-card">
-    <img src="https://beaconlightacademy.edu.pk/wp-content/uploads/2026/01/bla-footer-logo.png" alt="BLA Logo" class="academy-logo">
+<div class="container" id="card-wrap">
+    <img src="https://beaconlightacademy.edu.pk/wp-content/uploads/2026/01/bla-footer-logo.png" alt="BLA" class="academy-logo">
     
     <div class="card">
-        <div class="formula-tag">
-            BMI FORMULA: <b>WEIGHT (kg)</b> / <b>HEIGHT (m²)</b>
+        <div class="header-tag">BMI ANALYZER v7.1</div>
+
+        <div class="input-group">
+            <label>Weight (kg)</label>
+            <input type="number" id="weight" placeholder="00.0">
         </div>
 
-        <div class="input-field">
-            <label>Subject Weight (kg)</label>
-            <input type="number" id="w" placeholder="00.0" step="0.1">
+        <div class="input-group">
+            <label>Height (inches)</label>
+            <input type="number" id="inches" placeholder="00">
         </div>
 
-        <div class="input-field">
-            <label>Subject Height (cm)</label>
-            <input type="number" id="h" placeholder="000">
-        </div>
+        <button class="scan-btn" onclick="startScan()">Run Analysis</button>
 
-        <button class="btn" onclick="runAnalysis()">Analyze Subject</button>
+        <div id="result-display">
+            <div class="status-tag" id="status">Ready</div>
+            <div class="score-num" id="score">00.0</div>
+            
+            <div class="health-bar-bg">
+                <div class="health-bar-fill" id="fill"></div>
+            </div>
 
-        <div id="result-box">
-            <div class="status-pill" id="pill">Analyzing...</div>
-            <div class="bmi-val" id="score">--.-</div>
-            <p class="explanation" id="msg">Scanning biometric data...</p>
+            <p class="description" id="desc">Enter data to begin biometric scan.</p>
         </div>
     </div>
 
     <footer>
-        BEACON LIGHT ACADEMY | BIOMETRIC LAB 2026<br>
-        <div class="mikaeel-tag">Made by M.MIKAEEL IMRAN</div>
+        BEACON LIGHT ACADEMY | SCIENCE 2026<br>
+        <div class="mikaeel-badge">M. MIKAEEL IMRAN</div>
     </footer>
 </div>
 
 <script>
-    // 3D Tilt Logic: Card follows mouse movement
-    const card = document.getElementById('tilt-card');
+    const wrap = document.getElementById('card-wrap');
     document.addEventListener('mousemove', (e) => {
-        let xAxis = (window.innerWidth / 2 - e.pageX) / 25;
-        let yAxis = (window.innerHeight / 2 - e.pageY) / 25;
-        card.style.transform = `rotateY(${xAxis}deg) rotateX(${-yAxis}deg)`;
+        let x = (window.innerWidth / 2 - e.pageX) / 35;
+        let y = (window.innerHeight / 2 - e.pageY) / 35;
+        wrap.style.transform = `rotateY(${x}deg) rotateX(${-y}deg)`;
     });
 
-    // BMI Calculation Logic
-    function runAnalysis() {
-        const weight = document.getElementById('w').value;
-        const heightCm = document.getElementById('h').value;
-        const resultBox = document.getElementById('result-box');
+    function startScan() {
+        const w = document.getElementById('weight').value;
+        const i = document.getElementById('inches').value;
+        const display = document.getElementById('result-display');
         
-        if(weight > 0 && heightCm > 0) {
-            // Formula Execution
-            const heightM = heightCm / 100;
-            const bmi = (weight / (heightM * heightM)).toFixed(1);
+        if(w > 0 && i > 0) {
+            const meters = i * 0.0254;
+            const bmi = (w / (meters * meters)).toFixed(1);
             
             document.getElementById('score').innerText = bmi;
-            resultBox.classList.add('active');
+            display.classList.add('active');
 
-            const pill = document.getElementById('pill');
-            const msg = document.getElementById('msg');
+            const status = document.getElementById('status');
+            const desc = document.getElementById('desc');
+            const fill = document.getElementById('fill');
 
-            // Categorization
-            if(bmi < 18.5) {
-                pill.innerText = "Underweight";
-                pill.style.background = "rgba(0, 150, 255, 0.15)";
-                pill.style.color = "#0096ff";
-                msg.innerText = "Weight is below optimal range for this height. Focus on nutrition.";
-            } else if(bmi <= 24.9) {
-                pill.innerText = "Normal weight";
-                pill.style.background = "rgba(0, 255, 153, 0.15)";
-                pill.style.color = "#00ff99";
-                msg.innerText = "Subject is in the Healthy Zone. Perfect height-to-weight balance.";
+            let barWidth = (bmi / 40) * 100;
+            fill.style.width = Math.min(barWidth, 100) + "%";
+
+            // UPDATED RANGES
+            if(bmi < 18.0) {
+                status.innerText = "Underweight";
+                status.style.color = "#00b4ff";
+                fill.style.background = "#00b4ff";
+                desc.innerText = "Subject mass is below threshold. Nutritional intake needs to be increased.";
+            } else if(bmi < 25.0) {
+                status.innerText = "Normal Weight";
+                status.style.color = "#00ffcc";
+                fill.style.background = "#00ffcc";
+                desc.innerText = "Subject is within the healthy range. Maintain current lifestyle and diet.";
+            } else if(bmi < 30.0) {
+                status.innerText = "Overweight";
+                status.style.color = "#ff9d00";
+                fill.style.background = "#ff9d00";
+                desc.innerText = "Subject is above standard range. Regular physical activity is advised.";
             } else {
-                pill.innerText = "Overweight Range";
-                pill.style.background = "rgba(255, 100, 0, 0.15)";
-                pill.style.color = "#ff6400";
-                msg.innerText = "Weight exceeds optimal range. High physical activity is recommended.";
+                status.innerText = "Obese";
+                status.style.color = "#ff3e3e";
+                fill.style.background = "#ff3e3e";
+                desc.innerText = "Subject mass is significantly high. Consult with a specialist for a health plan.";
             }
-        } else {
-            alert("Please enter valid data points.");
         }
     }
 </script>

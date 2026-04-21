@@ -3,243 +3,245 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Titanium Bio-Scanner | M. Mikaeel Imran</title>
+    <title>Obsidian Bio-Scanner | M. Mikaeel Imran</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200;400;800&family=Space+Mono&display=swap');
 
-        * { margin: 0; padding: 0; box-sizing: border-box; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        :root {
+            --neon: #00ffcc;
+            --bg: #030303;
+            --card-bg: rgba(12, 12, 12, 0.8);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
 
         body {
-            background: #020202;
+            background: var(--bg);
             color: #fff;
-            font-family: 'Plus Jakarta Sans', sans-serif;
             height: 100vh;
-            width: 100vw;
             display: flex;
             justify-content: center;
             align-items: center;
             overflow: hidden;
-            perspective: 1200px;
-        }
-
-        .grid {
-            position: absolute;
-            width: 200%; height: 200%;
-            background-image: linear-gradient(rgba(0, 255, 204, 0.03) 1px, transparent 1px), 
-                              linear-gradient(90deg, rgba(0, 255, 204, 0.03) 1px, transparent 1px);
-            background-size: 50px 50px;
-            transform: rotateX(60deg) translateY(-20%);
-            animation: gridMove 20s linear infinite;
-            z-index: 0;
-        }
-        @keyframes gridMove { from { transform: rotateX(60deg) translateY(0); } to { transform: rotateX(60deg) translateY(50px); } }
-
-        .container {
             position: relative;
-            z-index: 10;
-            width: 90%;
-            max-width: 450px;
-            text-align: center;
+        }
+
+        /* Animated Bio-Signal Particles */
+        .particles {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at 50% 50%, #0a1513 0%, #000 100%);
+            z-index: -1;
+        }
+
+        /* The Glowing Border Trace */
+        .card-wrap {
+            position: relative;
+            padding: 2px;
+            border-radius: 40px;
+            background: linear-gradient(0deg, transparent, transparent, var(--neon));
+            background-size: 200% 200%;
+            animation: borderRotate 4s linear infinite;
+        }
+        @keyframes borderRotate { 
+            0% { background-position: 0% 0%; }
+            100% { background-position: 200% 200%; }
         }
 
         .card {
-            background: rgba(15, 15, 15, 0.7);
-            backdrop-filter: blur(40px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 50px;
+            background: var(--card-bg);
+            backdrop-filter: blur(60px);
+            border-radius: 38px;
             padding: 45px;
-            box-shadow: 0 50px 120px rgba(0, 0, 0, 0.9);
+            width: 420px;
+            text-align: center;
+            box-shadow: 0 0 50px rgba(0,0,0,1);
+            position: relative;
             overflow: hidden;
+        }
+
+        /* Live ECG Heartbeat Line */
+        .ecg-line {
+            width: 100%; height: 30px;
+            background: url('https://www.transparenttextures.com/patterns/carbon-fibre.png');
+            opacity: 0.1;
+            margin-bottom: 20px;
+            border-bottom: 1px solid rgba(0, 255, 204, 0.2);
             position: relative;
         }
-
-        .card::after {
+        .ecg-line::after {
             content: "";
             position: absolute;
-            top: -100%;
-            left: 0;
+            left: -100%;
+            top: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(transparent, rgba(0, 255, 204, 0.05), transparent);
-            animation: scan 4s infinite;
+            background: linear-gradient(90deg, transparent, var(--neon), transparent);
+            animation: pulse-line 2s infinite linear;
         }
-        @keyframes scan { 0% { top: -100%; } 100% { top: 100%; } }
+        @keyframes pulse-line { 100% { left: 100%; } }
 
-        .academy-logo {
-            height: 45px;
-            margin-bottom: 20px;
-            filter: drop-shadow(0 0 15px rgba(0, 255, 204, 0.6));
-        }
+        .academy-logo { height: 35px; margin-bottom: 15px; filter: drop-shadow(0 0 10px var(--neon)); }
+        .header-tag { font-family: 'Space Mono', monospace; font-size: 0.55rem; color: var(--neon); letter-spacing: 5px; margin-bottom: 30px; opacity: 0.6; }
 
-        .header-tag {
-            font-family: 'Space Mono', monospace;
-            font-size: 0.6rem;
-            color: #00ffcc;
-            letter-spacing: 3px;
-            margin-bottom: 30px;
-            opacity: 0.7;
-        }
-
-        .input-group { margin-bottom: 20px; text-align: left; }
-        label { font-size: 0.65rem; font-weight: 800; color: #666; text-transform: uppercase; letter-spacing: 2px; margin-left: 10px; }
-
+        /* Sleek Input Fields */
+        .input-box { margin-bottom: 22px; text-align: left; }
+        label { font-size: 0.6rem; font-weight: 800; color: #444; text-transform: uppercase; letter-spacing: 2px; margin-left: 10px; }
+        
         input {
             width: 100%;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 22px;
-            border-radius: 25px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 18px 20px;
+            border-radius: 18px;
             color: #fff;
-            font-size: 1.3rem;
+            font-size: 1.2rem;
             outline: none;
             margin-top: 8px;
             text-align: center;
+            transition: 0.3s ease;
         }
-        input:focus { border-color: #00ffcc; background: rgba(0, 255, 204, 0.05); transform: scale(1.02); }
+        input:focus { border-color: var(--neon); background: rgba(0, 255, 204, 0.05); box-shadow: 0 0 20px rgba(0, 255, 204, 0.1); }
 
-        .scan-btn {
+        /* Kinetic Button */
+        .btn {
             width: 100%;
-            padding: 22px;
+            padding: 20px;
             background: #fff;
             color: #000;
-            border-radius: 25px;
+            border-radius: 18px;
             border: none;
             font-weight: 800;
             text-transform: uppercase;
-            letter-spacing: 4px;
+            letter-spacing: 3px;
             cursor: pointer;
-            margin-top: 15px;
+            transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
-        .scan-btn:hover { background: #00ffcc; box-shadow: 0 0 40px rgba(0, 255, 204, 0.4); transform: translateY(-5px); }
+        .btn:active { transform: scale(0.95); }
+        .btn:hover { background: var(--neon); box-shadow: 0 0 30px rgba(0, 255, 204, 0.4); }
 
-        #result-display {
-            max-height: 0; opacity: 0; overflow: hidden;
-            transition: all 0.8s cubic-bezier(0.19, 1, 0.22, 1);
+        /* Result Panel with Glitch Effect */
+        #results {
+            display: none;
+            margin-top: 35px;
+            animation: glitchReveal 0.4s ease;
         }
-        #result-display.active { max-height: 400px; opacity: 1; margin-top: 35px; }
+        @keyframes glitchReveal {
+            0% { opacity: 0; transform: skewX(10deg); }
+            50% { opacity: 0.5; transform: skewX(-10deg); }
+            100% { opacity: 1; transform: skewX(0); }
+        }
 
-        .score-num { font-size: 5rem; font-weight: 200; line-height: 1; margin: 10px 0; }
+        .score { font-size: 5rem; font-weight: 200; line-height: 1; letter-spacing: -2px; }
         
-        .health-bar-bg {
-            width: 100%;
-            height: 8px;
-            background: #222;
-            border-radius: 10px;
-            margin: 20px 0;
-            position: relative;
+        /* Interactive Spectrum */
+        .spectrum-bar {
+            display: flex;
+            gap: 5px;
+            height: 4px;
+            margin: 25px 0 10px;
         }
-        .health-bar-fill {
-            height: 100%;
-            width: 0%;
-            background: #00ffcc;
-            border-radius: 10px;
-            transition: width 1.5s ease-in-out, background 0.5s ease;
-        }
+        .block { flex: 1; height: 100%; background: #1a1a1a; border-radius: 2px; transition: 0.6s; }
 
-        .status-tag { font-size: 0.8rem; font-weight: 800; text-transform: uppercase; letter-spacing: 2px; }
-        .description { font-size: 0.85rem; color: #888; margin-top: 10px; line-height: 1.5; font-weight: 400; }
+        .status-label { font-size: 0.75rem; font-weight: 800; text-transform: uppercase; letter-spacing: 2px; margin-top: 10px; }
+        .desc { font-size: 0.8rem; color: #666; margin-top: 10px; line-height: 1.5; }
 
-        footer { margin-top: 40px; font-size: 0.55rem; color: #444; letter-spacing: 2px; }
-        .mikaeel-badge { 
-            color: #00ffcc; 
-            border: 1px solid #222; 
-            padding: 8px 18px; 
-            border-radius: 15px; 
-            display: inline-block; 
-            margin-top: 15px;
-            font-weight: 800;
-        }
+        footer { margin-top: 40px; font-size: 0.55rem; color: #333; letter-spacing: 2px; }
+        .mikaeel-id { color: var(--neon); font-weight: 800; border: 1px solid #222; padding: 6px 12px; border-radius: 10px; display: inline-block; margin-top: 12px; }
     </style>
 </head>
 <body>
 
-<div class="grid"></div>
+<div class="particles"></div>
 
-<div class="container" id="card-wrap">
-    <img src="https://beaconlightacademy.edu.pk/wp-content/uploads/2026/01/bla-footer-logo.png" alt="BLA" class="academy-logo">
-    
+<div class="card-wrap">
     <div class="card">
-        <div class="header-tag">BMI ANALYZER v7.1</div>
+        <div class="ecg-line"></div>
+        <img src="https://beaconlightacademy.edu.pk/wp-content/uploads/2026/01/bla-footer-logo.png" alt="BLA" class="academy-logo">
+        
+        <div class="header-tag">SYSTEM ANALYSIS v9.0</div>
 
-        <div class="input-group">
-            <label>Weight (kg)</label>
-            <input type="number" id="weight" placeholder="00.0">
+        <div class="input-box">
+            <label>Mass (KG)</label>
+            <input type="number" id="mass" placeholder="00.0">
         </div>
 
-        <div class="input-group">
-            <label>Height (inches)</label>
-            <input type="number" id="inches" placeholder="00">
+        <div class="input-box">
+            <label>Inches</label>
+            <input type="number" id="height" placeholder="00">
         </div>
 
-        <button class="scan-btn" onclick="startScan()">Run Analysis</button>
+        <button class="btn" onclick="processData()">Initialize Scan</button>
 
-        <div id="result-display">
-            <div class="status-tag" id="status">Ready</div>
-            <div class="score-num" id="score">00.0</div>
+        <div id="results">
+            <div class="status-label" id="status">Syncing...</div>
+            <div class="score" id="bmi-val">00.0</div>
             
-            <div class="health-bar-bg">
-                <div class="health-bar-fill" id="fill"></div>
+            <div class="spectrum-bar">
+                <div class="block" id="b1"></div>
+                <div class="block" id="b2"></div>
+                <div class="block" id="b3"></div>
+                <div class="block" id="b4"></div>
             </div>
 
-            <p class="description" id="desc">Enter data to begin biometric scan.</p>
+            <p class="desc" id="message">Processing biometric profile...</p>
         </div>
     </div>
-
-    <footer>
-        BEACON LIGHT ACADEMY | SCIENCE 2026<br>
-        <div class="mikaeel-badge">M. MIKAEEL IMRAN</div>
-    </footer>
 </div>
 
+<footer style="position: absolute; bottom: 30px; text-align: center;">
+    BEACON LIGHT ACADEMY | BIO-LAB 2026<br>
+    <div class="mikaeel-id">M. MIKAEEL IMRAN | HEAD DEVELOPER</div>
+</footer>
+
 <script>
-    const wrap = document.getElementById('card-wrap');
-    document.addEventListener('mousemove', (e) => {
-        let x = (window.innerWidth / 2 - e.pageX) / 35;
-        let y = (window.innerHeight / 2 - e.pageY) / 35;
-        wrap.style.transform = `rotateY(${x}deg) rotateX(${-y}deg)`;
-    });
+    function processData() {
+        const kg = document.getElementById('mass').value;
+        const inch = document.getElementById('height').value;
+        const res = document.getElementById('results');
 
-    function startScan() {
-        const w = document.getElementById('weight').value;
-        const i = document.getElementById('inches').value;
-        const display = document.getElementById('result-display');
-        
-        if(w > 0 && i > 0) {
-            const meters = i * 0.0254;
-            const bmi = (w / (meters * meters)).toFixed(1);
+        if(kg > 0 && inch > 0) {
+            res.style.display = "none"; 
             
-            document.getElementById('score').innerText = bmi;
-            display.classList.add('active');
+            // Artificial delay for "Coolness"
+            setTimeout(() => {
+                res.style.display = "block";
+                runMath(kg, inch);
+            }, 600);
+        }
+    }
 
-            const status = document.getElementById('status');
-            const desc = document.getElementById('desc');
-            const fill = document.getElementById('fill');
+    function runMath(w, i) {
+        const meters = i * 0.0254;
+        const bmi = (w / (meters * meters)).toFixed(1);
+        document.getElementById('bmi-val').innerText = bmi;
 
-            let barWidth = (bmi / 40) * 100;
-            fill.style.width = Math.min(barWidth, 100) + "%";
+        const status = document.getElementById('status');
+        const msg = document.getElementById('message');
+        
+        // Reset blocks
+        document.querySelectorAll('.block').forEach(b => b.style.background = "#1a1a1a");
 
-            // UPDATED RANGES
-            if(bmi < 18.0) {
-                status.innerText = "Underweight";
-                status.style.color = "#00b4ff";
-                fill.style.background = "#00b4ff";
-                desc.innerText = "Subject mass is below threshold. Nutritional intake needs to be increased.";
-            } else if(bmi < 25.0) {
-                status.innerText = "Normal Weight";
-                status.style.color = "#00ffcc";
-                fill.style.background = "#00ffcc";
-                desc.innerText = "Subject is within the healthy range. Maintain current lifestyle and diet.";
-            } else if(bmi < 30.0) {
-                status.innerText = "Overweight";
-                status.style.color = "#ff9d00";
-                fill.style.background = "#ff9d00";
-                desc.innerText = "Subject is above standard range. Regular physical activity is advised.";
-            } else {
-                status.innerText = "Obese";
-                status.style.color = "#ff3e3e";
-                fill.style.background = "#ff3e3e";
-                desc.innerText = "Subject mass is significantly high. Consult with a specialist for a health plan.";
-            }
+        if(bmi < 18.0) {
+            status.innerText = "Underweight";
+            status.style.color = "#00b4ff";
+            document.getElementById('b1').style.background = "#00b4ff";
+            msg.innerText = "Biological mass is below optimal threshold.";
+        } else if(bmi < 25.0) {
+            status.innerText = "Normal Weight";
+            status.style.color = "#00ffcc";
+            document.getElementById('b2').style.background = "#00ffcc";
+            msg.innerText = "Subject is in peak physiological balance.";
+        } else if(bmi < 30.0) {
+            status.innerText = "Overweight";
+            status.style.color = "#ff9d00";
+            document.getElementById('b3').style.background = "#ff9d00";
+            msg.innerText = "Mass exceeds standard biometric parameters.";
+        } else {
+            status.innerText = "Obese";
+            status.style.color = "#ff3e3e";
+            document.getElementById('b4').style.background = "#ff3e3e";
+            msg.innerText = "Critical mass deviation detected. Consultation required.";
         }
     }
 </script>

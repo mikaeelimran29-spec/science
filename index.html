@@ -3,245 +3,194 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Obsidian Bio-Scanner | M. Mikaeel Imran</title>
+    <title>Bio-Scanner | M. Mikaeel Imran</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200;400;800&family=Space+Mono&display=swap');
-
-        :root {
-            --neon: #00ffcc;
-            --bg: #030303;
-            --card-bg: rgba(12, 12, 12, 0.8);
-        }
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;700;800&display=swap');
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
 
         body {
-            background: var(--bg);
+            background: #000;
             color: #fff;
-            height: 100vh;
+            min-height: 100vh;
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
-            overflow: hidden;
-            position: relative;
+            justify-content: center;
+            padding: 20px;
         }
 
-        /* Animated Bio-Signal Particles */
-        .particles {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle at 50% 50%, #0a1513 0%, #000 100%);
+        /* Ambient Glow in background */
+        .bg-glow {
+            position: fixed;
+            top: 50%; left: 50%;
+            width: 80vw; height: 80vw;
+            background: radial-gradient(circle, rgba(0, 255, 204, 0.08) 0%, transparent 70%);
+            transform: translate(-50%, -50%);
             z-index: -1;
         }
 
-        /* The Glowing Border Trace */
-        .card-wrap {
-            position: relative;
-            padding: 2px;
-            border-radius: 40px;
-            background: linear-gradient(0deg, transparent, transparent, var(--neon));
-            background-size: 200% 200%;
-            animation: borderRotate 4s linear infinite;
+        .container {
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
         }
-        @keyframes borderRotate { 
-            0% { background-position: 0% 0%; }
-            100% { background-position: 200% 200%; }
-        }
+
+        .logo { height: 40px; margin-bottom: 20px; }
 
         .card {
-            background: var(--card-bg);
-            backdrop-filter: blur(60px);
-            border-radius: 38px;
-            padding: 45px;
-            width: 420px;
-            text-align: center;
-            box-shadow: 0 0 50px rgba(0,0,0,1);
-            position: relative;
-            overflow: hidden;
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 30px;
+            padding: 30px 25px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
         }
 
-        /* Live ECG Heartbeat Line */
-        .ecg-line {
-            width: 100%; height: 30px;
-            background: url('https://www.transparenttextures.com/patterns/carbon-fibre.png');
-            opacity: 0.1;
-            margin-bottom: 20px;
-            border-bottom: 1px solid rgba(0, 255, 204, 0.2);
-            position: relative;
-        }
-        .ecg-line::after {
-            content: "";
-            position: absolute;
-            left: -100%;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, var(--neon), transparent);
-            animation: pulse-line 2s infinite linear;
-        }
-        @keyframes pulse-line { 100% { left: 100%; } }
+        h1 { font-size: 0.7rem; letter-spacing: 4px; color: #00ffcc; text-transform: uppercase; margin-bottom: 30px; opacity: 0.8; }
 
-        .academy-logo { height: 35px; margin-bottom: 15px; filter: drop-shadow(0 0 10px var(--neon)); }
-        .header-tag { font-family: 'Space Mono', monospace; font-size: 0.55rem; color: var(--neon); letter-spacing: 5px; margin-bottom: 30px; opacity: 0.6; }
-
-        /* Sleek Input Fields */
-        .input-box { margin-bottom: 22px; text-align: left; }
-        label { font-size: 0.6rem; font-weight: 800; color: #444; text-transform: uppercase; letter-spacing: 2px; margin-left: 10px; }
+        /* Mobile-Friendly Inputs */
+        .input-group { margin-bottom: 20px; text-align: left; }
+        label { font-size: 0.65rem; font-weight: 800; color: #666; text-transform: uppercase; letter-spacing: 1.5px; margin-left: 10px; }
         
         input {
             width: 100%;
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            padding: 18px 20px;
-            border-radius: 18px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 18px;
+            border-radius: 15px;
             color: #fff;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             outline: none;
             margin-top: 8px;
             text-align: center;
-            transition: 0.3s ease;
+            -webkit-appearance: none; /* Fixes mobile styling */
         }
-        input:focus { border-color: var(--neon); background: rgba(0, 255, 204, 0.05); box-shadow: 0 0 20px rgba(0, 255, 204, 0.1); }
+        input:focus { border-color: #00ffcc; background: rgba(0, 255, 204, 0.05); }
 
-        /* Kinetic Button */
         .btn {
             width: 100%;
             padding: 20px;
             background: #fff;
             color: #000;
-            border-radius: 18px;
+            border-radius: 15px;
             border: none;
             font-weight: 800;
             text-transform: uppercase;
-            letter-spacing: 3px;
+            letter-spacing: 2px;
             cursor: pointer;
-            transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            font-size: 1rem;
+            transition: 0.3s;
         }
-        .btn:active { transform: scale(0.95); }
-        .btn:hover { background: var(--neon); box-shadow: 0 0 30px rgba(0, 255, 204, 0.4); }
+        .btn:active { transform: scale(0.95); background: #00ffcc; }
 
-        /* Result Panel with Glitch Effect */
+        /* Result Section */
         #results {
             display: none;
-            margin-top: 35px;
-            animation: glitchReveal 0.4s ease;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            animation: slideUp 0.5s ease-out;
         }
-        @keyframes glitchReveal {
-            0% { opacity: 0; transform: skewX(10deg); }
-            50% { opacity: 0.5; transform: skewX(-10deg); }
-            100% { opacity: 1; transform: skewX(0); }
-        }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
-        .score { font-size: 5rem; font-weight: 200; line-height: 1; letter-spacing: -2px; }
+        .score { font-size: 4rem; font-weight: 300; margin: 10px 0; }
         
-        /* Interactive Spectrum */
-        .spectrum-bar {
-            display: flex;
-            gap: 5px;
-            height: 4px;
-            margin: 25px 0 10px;
+        .status-pill {
+            display: inline-block;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
         }
-        .block { flex: 1; height: 100%; background: #1a1a1a; border-radius: 2px; transition: 0.6s; }
 
-        .status-label { font-size: 0.75rem; font-weight: 800; text-transform: uppercase; letter-spacing: 2px; margin-top: 10px; }
-        .desc { font-size: 0.8rem; color: #666; margin-top: 10px; line-height: 1.5; }
+        .desc { font-size: 0.85rem; color: #888; line-height: 1.6; }
 
-        footer { margin-top: 40px; font-size: 0.55rem; color: #333; letter-spacing: 2px; }
-        .mikaeel-id { color: var(--neon); font-weight: 800; border: 1px solid #222; padding: 6px 12px; border-radius: 10px; display: inline-block; margin-top: 12px; }
+        footer { margin-top: 30px; font-size: 0.6rem; color: #444; letter-spacing: 1px; }
+        .tag { color: #00ffcc; font-weight: 700; margin-top: 5px; }
     </style>
 </head>
 <body>
 
-<div class="particles"></div>
+<div class="bg-glow"></div>
 
-<div class="card-wrap">
+<div class="container">
+    <img src="https://beaconlightacademy.edu.pk/wp-content/uploads/2026/01/bla-footer-logo.png" alt="BLA" class="logo">
+    
     <div class="card">
-        <div class="ecg-line"></div>
-        <img src="https://beaconlightacademy.edu.pk/wp-content/uploads/2026/01/bla-footer-logo.png" alt="BLA" class="academy-logo">
-        
-        <div class="header-tag">SYSTEM ANALYSIS v9.0</div>
+        <h1>Health Scan v10.0</h1>
 
-        <div class="input-box">
-            <label>Mass (KG)</label>
-            <input type="number" id="mass" placeholder="00.0">
+        <div class="input-group">
+            <label>Weight (kg)</label>
+            <input type="number" id="w" placeholder="e.g. 55" inputmode="decimal">
         </div>
 
-        <div class="input-box">
-            <label>Inches</label>
-            <input type="number" id="height" placeholder="00">
+        <div class="input-group">
+            <label>Height (inches)</label>
+            <input type="number" id="i" placeholder="e.g. 64" inputmode="decimal">
         </div>
 
-        <button class="btn" onclick="processData()">Initialize Scan</button>
+        <button class="btn" onclick="startScan()">Analyze Now</button>
 
         <div id="results">
-            <div class="status-label" id="status">Syncing...</div>
-            <div class="score" id="bmi-val">00.0</div>
-            
-            <div class="spectrum-bar">
-                <div class="block" id="b1"></div>
-                <div class="block" id="b2"></div>
-                <div class="block" id="b3"></div>
-                <div class="block" id="b4"></div>
-            </div>
-
-            <p class="desc" id="message">Processing biometric profile...</p>
+            <div class="status-pill" id="pill">Normal</div>
+            <div class="score" id="bmi">00.0</div>
+            <p class="desc" id="msg">Scanning complete.</p>
         </div>
     </div>
+
+    <footer>
+        BEACON LIGHT ACADEMY | SCIENCE PROJECT<br>
+        <div class="tag">BY M. MIKAEEL IMRAN</div>
+    </footer>
 </div>
 
-<footer style="position: absolute; bottom: 30px; text-align: center;">
-    BEACON LIGHT ACADEMY | BIO-LAB 2026<br>
-    <div class="mikaeel-id">M. MIKAEEL IMRAN | HEAD DEVELOPER</div>
-</footer>
-
 <script>
-    function processData() {
-        const kg = document.getElementById('mass').value;
-        const inch = document.getElementById('height').value;
-        const res = document.getElementById('results');
+    function startScan() {
+        const weight = document.getElementById('w').value;
+        const inches = document.getElementById('i').value;
+        const resDiv = document.getElementById('results');
 
-        if(kg > 0 && inch > 0) {
-            res.style.display = "none"; 
+        if (weight > 0 && inches > 0) {
+            // Step 1: Convert inches to meters
+            const meters = inches * 0.0254;
+            // Step 2: Calculate BMI (Weight / Meters squared)
+            const bmi = (weight / (meters * meters)).toFixed(1);
             
-            // Artificial delay for "Coolness"
-            setTimeout(() => {
-                res.style.display = "block";
-                runMath(kg, inch);
-            }, 600);
-        }
-    }
+            // Show the result area
+            resDiv.style.display = "block";
+            document.getElementById('bmi').innerText = bmi;
 
-    function runMath(w, i) {
-        const meters = i * 0.0254;
-        const bmi = (w / (meters * meters)).toFixed(1);
-        document.getElementById('bmi-val').innerText = bmi;
+            const pill = document.getElementById('pill');
+            const msg = document.getElementById('msg');
 
-        const status = document.getElementById('status');
-        const msg = document.getElementById('message');
-        
-        // Reset blocks
-        document.querySelectorAll('.block').forEach(b => b.style.background = "#1a1a1a");
-
-        if(bmi < 18.0) {
-            status.innerText = "Underweight";
-            status.style.color = "#00b4ff";
-            document.getElementById('b1').style.background = "#00b4ff";
-            msg.innerText = "Biological mass is below optimal threshold.";
-        } else if(bmi < 25.0) {
-            status.innerText = "Normal Weight";
-            status.style.color = "#00ffcc";
-            document.getElementById('b2').style.background = "#00ffcc";
-            msg.innerText = "Subject is in peak physiological balance.";
-        } else if(bmi < 30.0) {
-            status.innerText = "Overweight";
-            status.style.color = "#ff9d00";
-            document.getElementById('b3').style.background = "#ff9d00";
-            msg.innerText = "Mass exceeds standard biometric parameters.";
+            // Step 3: Logic Gates (The ranges you asked for)
+            if (bmi < 18.0) {
+                pill.innerText = "Underweight";
+                pill.style.background = "rgba(0, 180, 255, 0.2)";
+                pill.style.color = "#00b4ff";
+                msg.innerText = "The subject is below the healthy mass range.";
+            } else if (bmi < 25.0) {
+                pill.innerText = "Normal Weight";
+                pill.style.background = "rgba(0, 255, 204, 0.2)";
+                pill.style.color = "#00ffcc";
+                msg.innerText = "The subject is in a healthy, balanced state.";
+            } else if (bmi < 30.0) {
+                pill.innerText = "Overweight";
+                pill.style.background = "rgba(255, 150, 0, 0.2)";
+                pill.style.color = "#ff9600";
+                msg.innerText = "The subject is slightly above the standard range.";
+            } else {
+                pill.innerText = "Obese";
+                pill.style.background = "rgba(255, 50, 50, 0.2)";
+                pill.style.color = "#ff3232";
+                msg.innerText = "The subject's mass is significantly high.";
+            }
         } else {
-            status.innerText = "Obese";
-            status.style.color = "#ff3e3e";
-            document.getElementById('b4').style.background = "#ff3e3e";
-            msg.innerText = "Critical mass deviation detected. Consultation required.";
+            alert("Please enter numbers for Weight and Height!");
         }
     }
 </script>
